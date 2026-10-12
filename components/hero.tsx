@@ -36,7 +36,7 @@ export function Hero() {
     if (!playing) return;
     const timer = setInterval(
       () => setIndex((i) => (i + 1) % events.length),
-      6500,
+      4000,
     );
     return () => clearInterval(timer);
   }, [playing]);
