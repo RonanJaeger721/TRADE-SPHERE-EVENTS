@@ -1,165 +1,243 @@
 import Link from "next/link";
-import { ArrowUpRight, ArrowDown } from "lucide-react";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
 import { Hero } from "@/components/hero";
-import { ScenePicker } from "@/components/scene-picker";
+import { Reveal } from "@/components/reveal";
 import { events, dateLabel } from "@/lib/events";
+import { articles } from "@/lib/journal";
+export const metadata = { title: "The journal — experiences, people & ideas" };
 export default function Home() {
   return (
     <>
       <Hero />
-      <section className="agenda-journal">
-        <div className="journal-section-line">
-          <span>01 / THE AGENDA</span>
-          <span>GOOD PLANS START HERE</span>
-        </div>
-        <div className="agenda-heading">
-          <h2>
-            Worth stepping
-            <br />
-            <span>out for.</span>
-          </h2>
-          <p>
-            Live music. New conversations. Unexpected discoveries.
-            <br />A few pages from the world of Trade Sphere.
-          </p>
-          <Link href="/events">
-            Explore the directory <ArrowUpRight size={19} />
-          </Link>
-        </div>
-        <div className="agenda-layout">
-          <Link className="lead-story" href={"/events/" + events[0].slug}>
-            <div className="lead-photo">
-              <img
-                src={events[0].image}
-                alt="Illustrative live concert"
-                loading="lazy"
-              />
-              <span>THE COVER EXPERIENCE / DEMO</span>
-              <ArrowUpRight size={30} />
-            </div>
-            <div className="story-kicker">
-              <span>{events[0].category}</span>
-              <span>{dateLabel(events[0].date)}</span>
-            </div>
-            <h3>{events[0].name}</h3>
-            <p>
-              For the feeling you can’t download. A demonstration of the live
-              music experiences coming to the sphere.
-            </p>
-          </Link>
-          <div className="shortlist">
-            <div className="shortlist-title">
-              <h3>The shortlist.</h3>
+      <Reveal>
+        <section className="experience-row container">
+          <div className="row-intro">
+            <p className="eyebrow">FIND YOUR MOMENT</p>
+            <h2>
+              Experiences{" "}
+              <em>worth exploring.</em>
+            </h2>
+            <p>Live music, fresh ideas and reasons to get out there.</p>
+            <Link className="round-link" href="/events">
               <span>
-                03 READS <ArrowDown size={16} />
+                <ArrowRight size={16} />
               </span>
-            </div>
-            {events.slice(1).map((e, i) => (
+              Discover all experiences
+            </Link>
+          </div>
+          <div className="experience-cards">
+            {events.map((e) => (
               <Link
+                className="experience-tile"
                 href={"/events/" + e.slug}
-                className="shortlist-story"
                 key={e.slug}
               >
-                <span className="shortlist-number">0{i + 2}</span>
-                <div>
-                  <small>{e.category} · DEMO</small>
+                <img
+                  src={e.image}
+                  alt={e.tag + " — illustrative event photography"}
+                  loading="lazy"
+                />
+                <div className="tile-shade" />
+                <span className="tile-demo">DEMO</span>
+                <div className="tile-caption">
+                  <small>
+                    {e.city} · {dateLabel(e.date)}
+                  </small>
                   <h3>{e.name}</h3>
-                  <p>
-                    {dateLabel(e.date)} · {e.city}
-                  </p>
+                  <ArrowUpRight size={20} />
                 </div>
-                <img src={e.image} alt="" loading="lazy" />
-                <ArrowUpRight size={18} />
               </Link>
             ))}
-            <div className="editors-note">
-              <span className="eyebrow">A NOTE ON THIS EDITION</span>
-              <p>
-                These are representative experiences, not announced events.
-                Dates, venues and prices are test content. Real listings will
-                take their place before bookings open.
-              </p>
-            </div>
           </div>
-        </div>
-      </section>
-      <ScenePicker />
-      <section className="journal-letter">
-        <div className="letter-margin">
-          <span>03 / FROM THE SPHERE</span>
-          <span>
-            CONNECT
-            <br />
-            EXPERIENCE
-            <br />
-            CREATE MEMORIES
-          </span>
-        </div>
-        <div className="letter-body">
-          <p className="eyebrow">TO THE PEOPLE WHO SHOW UP</p>
-          <h2>
-            The best stories
-            <br />
-            start with
-            <br />
-            <span>“I was there.”</span>
-          </h2>
-          <p>
-            You remember the room. The first song. The conversation you almost
-            didn’t have. The unexpected idea that stayed with you on the way
-            home.
-          </p>
-          <p>
-            Trade Sphere is being built for those moments — and the people who
-            make them happen.
-          </p>
-          <Link href="/about" className="journal-button">
-            A little more about us <ArrowUpRight size={18} />
-          </Link>
-        </div>
-        <div className="letter-photo">
+        </section>
+      </Reveal>
+      <div className="pale-band">
+        <Reveal>
+          <section className="reading-row container">
+            <div className="row-intro">
+              <p className="eyebrow">THE LATEST READS</p>
+              <h2>
+                Ideas for{" "}
+                <em>your next chapter.</em>
+              </h2>
+              <p>
+                A little inspiration. A few useful tips. Stories for people who
+                show up.
+              </p>
+              <Link className="round-link" href="/journal">
+                <span>
+                  <ArrowRight size={16} />
+                </span>
+                Explore the journal
+              </Link>
+            </div>
+            <div className="reading-cards">
+              {articles.slice(0, 3).map((a) => (
+                <Link
+                  className="reading-card"
+                  href={"/journal/" + a.slug}
+                  key={a.slug}
+                >
+                  <div>
+                    <img
+                      src={a.image}
+                      alt="Illustrative event photography"
+                      loading="lazy"
+                    />
+                    <span>{a.category}</span>
+                  </div>
+                  <h3>{a.title}</h3>
+                  <p>{a.summary}</p>
+                  <small>
+                    {a.readTime} <ArrowUpRight size={17} />
+                  </small>
+                </Link>
+              ))}
+            </div>
+          </section>
+        </Reveal>
+      </div>
+      <Reveal>
+        <section className="wide-story">
           <img
             src="/culture.jpg"
-            alt="Illustrative live experience with an audience"
+            alt="Illustrative festival crowd"
             loading="lazy"
           />
-          <span>BE PART OF THE STORY.</span>
-        </div>
-      </section>
-      <section className="journal-noticeboard">
-        <div>
-          <span className="eyebrow">FOR THE MOMENT MAKERS</span>
-          <h2>
-            Got a story
-            <br />
-            worth <span>gathering for?</span>
-          </h2>
-          <p>Bring your event into the sphere. Tell us what you’re planning.</p>
-          <Link href="/organisers" className="journal-button">
-            Explore hosting <ArrowUpRight size={19} />
-          </Link>
-        </div>
-        <div className="stay-in-loop">
-          <span className="eyebrow">THE NEXT CHAPTER</span>
-          <h3>
-            Stay in
-            <br />
-            the loop.
-          </h3>
-          <p>
-            Ask Trade Sphere about upcoming events and how to hear about the
-            next edition.
-          </p>
-          <a
-            href="https://wa.me/263789229508?text=Hi%20Trade%20Sphere%2C%20I%27d%20like%20to%20hear%20about%20upcoming%20events%20and%20future%20editions."
-            target="_blank"
-            rel="noopener noreferrer"
+          <div className="wide-story-overlay" />
+          <div className="container">
+            <p className="eyebrow">CONNECT · EXPERIENCE · CREATE MEMORIES</p>
+            <h2>
+              Some moments
+              <br />
+              are better <em>together.</em>
+            </h2>
+            <p>
+              The room. The energy. The people.
+              <br />
+              Find a reason to be part of something.
+            </p>
+            <Link className="button cyan" href="/categories">
+              Find your kind of experience <ArrowUpRight size={17} />
+            </Link>
+          </div>
+        </section>
+      </Reveal>
+      <Reveal>
+        <section className="hosting-row container">
+          <div className="row-intro">
+            <p className="eyebrow">BEHIND THE EXPERIENCE</p>
+            <h2>
+              For the{" "}
+              <em>moment makers.</em>
+            </h2>
+            <p>
+              Turn an idea into a gathering. Begin with a clear purpose and a
+              thoughtful plan.
+            </p>
+            <Link className="round-link" href="/organisers">
+              <span>
+                <ArrowRight size={16} />
+              </span>
+              Explore hosting
+            </Link>
+          </div>
+          <Link
+            className="host-feature"
+            href="/journal/from-an-idea-to-a-gathering"
           >
-            Ask about updates on WhatsApp <ArrowUpRight size={18} />
-          </a>
-          <small>Opens a conversation on WhatsApp.</small>
-        </div>
-      </section>
+            <img
+              src="/expo.jpg"
+              alt="Illustrative conference gathering"
+              loading="lazy"
+            />
+            <div>
+              <small>THE ORGANISER’S NOTEBOOK</small>
+              <h3>From an idea to a room full of people.</h3>
+              <p>Start with the experience you want to create.</p>
+              <span>
+                Read the guide <ArrowUpRight size={18} />
+              </span>
+            </div>
+          </Link>
+          <aside className="contact-note">
+            <span className="eyebrow">LET’S MAKE IT HAPPEN</span>
+            <h3>
+              Something{" "}
+              in mind?
+            </h3>
+            <p>Tell Trade Sphere about the event you’re planning.</p>
+            <Link href="/contact">
+              Start a conversation <ArrowUpRight size={18} />
+            </Link>
+          </aside>
+        </section>
+      </Reveal>
+      <div className="blue-band">
+        <Reveal>
+          <section className="about-journal container">
+            <div className="image-pair">
+              <img
+                src="/network.jpg"
+                alt="Illustrative social event setting"
+                loading="lazy"
+              />
+              <img
+                src="/concert.jpg"
+                alt="Illustrative concert audience"
+                loading="lazy"
+              />
+            </div>
+            <div>
+              <p className="eyebrow">WELCOME TO TRADE SPHERE</p>
+              <h2>
+                A space for
+                <br />
+                <em>people & possibilities.</em>
+              </h2>
+              <p>
+                Discover experiences, connect with ideas and meet the people who
+                bring them to life. Trade Sphere is being built around the
+                moments worth remembering.
+              </p>
+              <Link className="button outline" href="/about">
+                Get to know the sphere <ArrowUpRight size={17} />
+              </Link>
+            </div>
+          </section>
+        </Reveal>
+      </div>
+      <Reveal>
+        <section className="journal-follow container">
+          <div>
+            <p className="eyebrow">KEEP THE CONVERSATION GOING</p>
+            <h2>
+              What’s your
+              <br />
+              <em>next story?</em>
+            </h2>
+          </div>
+          <div>
+            <p>
+              Ask us about upcoming events, share your plans or find out how to
+              hear about future editions.
+            </p>
+            <a
+              className="button dark"
+              href="https://wa.me/263789229508?text=Hi%20Trade%20Sphere%2C%20I%27d%20like%20to%20hear%20about%20upcoming%20events%20and%20the%20journal."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Talk to Trade Sphere <ArrowUpRight size={17} />
+            </a>
+            <small>Opens a conversation on WhatsApp.</small>
+          </div>
+        </section>
+      </Reveal>
+      <p className="home-demo-note container">
+        Event listings, venues, dates and prices are demonstration content.
+        Ticket sales are not open in this preview.
+      </p>
     </>
   );
 }

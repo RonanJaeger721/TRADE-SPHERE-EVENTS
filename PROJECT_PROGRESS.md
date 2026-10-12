@@ -45,3 +45,15 @@ Milestone 1 scope remains: no account/payment/QR implementation. Updates CTA is 
 ### Editorial redesign final local gate
 
 Production build (including official-artwork icon route), TypeScript and Git whitespace checks pass. The same 34 route/asset/404 checks pass against the final local production server on port 3003. Smooth route-transition declaration added. No database or payment capability added in this revision.
+
+## Clean blog redesign — 12 October 2026
+
+Responded to the user's screenshot showing cover text overlapping its cream panel and the complaint about oversized masthead typography. Replaced that entire layout with a compact logo/navigation, full-width photo opening, experience-card rows, journal previews, photo banners and a blue brand section inspired by the supplied World Unite reference. Replaced the accumulated legacy CSS with one coherent stylesheet.
+
+Hero images crossfade automatically every 6.5 seconds, with subtle image movement. Autoplay pauses during pointer/keyboard interaction, when the hero is off screen, when the tab is hidden or when reduced motion is requested. Pause/resume and direct image selection remain available. Hero copy stays in document flow; no event-title/cream-panel overlap is possible. Heading size verified at 31–58px across required viewports.
+
+Added /journal and four informational guide routes. These are editorial content, not invented business announcements, testimonials or confirmed events. Existing demonstration event labels and booking limitations remain.
+
+Added reversible IntersectionObserver fade/translate reveals on sections and article paragraphs. Navigation hides while scrolling down and returns while scrolling up; open mobile navigation remains visible. Reduced motion retains all content and controls.
+
+Validation: production build and TypeScript pass. 39 final local production HTTP route/asset/404 checks pass, including all five journal routes. Autoplay observed advancing without manual selection. Responsive checks at 320, 360, 375, 390, 430, 768, 1024, 1366 and 1920px found no horizontal overflow or broken imagery. Browser verified scroll-down reveal states/header-hidden and scroll-up restored header. Local final production preview is http://localhost:3005. A development-server static-path worker JSON error was avoided by validating the actual production build; no production route errors reproduced.

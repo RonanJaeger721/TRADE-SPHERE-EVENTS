@@ -1,9 +1,21 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 export function Shell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let previous = window.scrollY;
+    const onScroll = () => {
+      const current = window.scrollY;
+      if (Math.abs(current - previous) < 10 && current > 180) return;
+      setHidden(current > 180 && current > previous);
+      previous = current;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
     <>
       <a className="skip" href="#main">
@@ -16,7 +28,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
           open.
         </span>
       </div>
-      <header>
+      <header
+        className={
+          hidden && !open ? "site-header header-hidden" : "site-header"
+        }
+      >
         <Link href="/" aria-label="Trade Sphere Events home" className="brand">
           <img src="/brand-logo.jpeg" alt="Trade Sphere Events official logo" />
           <span>
@@ -26,6 +42,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <nav className={open ? "nav open" : "nav"} aria-label="Main navigation">
           <Link href="/events" onClick={() => setOpen(false)}>
             Discover events
+          </Link>
+          <Link href="/journal" onClick={() => setOpen(false)}>
+            The journal
           </Link>
           <Link href="/categories" onClick={() => setOpen(false)}>
             Categories

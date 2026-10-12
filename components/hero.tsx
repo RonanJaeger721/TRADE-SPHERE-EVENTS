@@ -1,25 +1,56 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowUpRight, Pause, Play } from "lucide-react";
 import { events, dateLabel } from "@/lib/events";
 export function Hero() {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(0),
+    [paused, setPaused] = useState(false),
+    [hovered, setHovered] = useState(false),
+    [focused, setFocused] = useState(false),
+    [visible, setVisible] = useState(true),
+    [reduced, setReduced] = useState(false),
+    [tabActive, setTabActive] = useState(true);
   const root = useRef<HTMLElement>(null);
-  const event = events[index];
+  useEffect(() => {
+    const query = matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setReduced(query.matches);
+    update();
+    query.addEventListener("change", update);
+    const visibility = () => setTabActive(!document.hidden);
+    document.addEventListener("visibilitychange", visibility);
+    const observer = new IntersectionObserver(
+      ([entry]) => setVisible(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    if (root.current) observer.observe(root.current);
+    return () => {
+      query.removeEventListener("change", update);
+      document.removeEventListener("visibilitychange", visibility);
+      observer.disconnect();
+    };
+  }, []);
+  const playing =
+    !paused && !hovered && !focused && visible && !reduced && tabActive;
+  useEffect(() => {
+    if (!playing) return;
+    const timer = setInterval(
+      () => setIndex((i) => (i + 1) % events.length),
+      6500,
+    );
+    return () => clearInterval(timer);
+  }, [playing]);
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
     const render = () => {
       frame = 0;
       const box = el.getBoundingClientRect();
-      const travel = Math.max(1, el.offsetHeight - innerHeight);
-      const progress = reduced.matches
-        ? 0
-        : Math.max(0, Math.min(1, -box.top / travel));
-      el.style.setProperty("--cover-progress", String(progress));
+      el.style.setProperty(
+        "--hero-exit",
+        String(reduced ? 0 : Math.max(0, Math.min(1, -box.top / box.height))),
+      );
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(render);
@@ -27,135 +58,98 @@ export function Hero() {
     render();
     addEventListener("scroll", schedule, { passive: true });
     addEventListener("resize", schedule);
-    reduced.addEventListener("change", schedule);
     return () => {
       removeEventListener("scroll", schedule);
       removeEventListener("resize", schedule);
-      reduced.removeEventListener("change", schedule);
       cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [reduced]);
+  const e = events[index];
   return (
-    <>
-      <div className="journal-masthead">
-        <div className="issue-line">
-          <span>ZIMBABWE / THE EXPERIENCE JOURNAL</span>
-          <span>ISSUE 001 — DESIGN EDITION</span>
+    <section
+      ref={root}
+      className="photo-hero"
+      aria-label="Trade Sphere journal featured experiences"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget))
+          setFocused(false);
+      }}
+    >
+      <div className="hero-slides" aria-hidden="true">
+        {events.map((event, i) => (
+          <img
+            key={event.slug}
+            src={event.image}
+            className={index === i ? "hero-slide active" : "hero-slide"}
+            alt=""
+            fetchPriority={i === 0 ? "high" : "auto"}
+          />
+        ))}
+      </div>
+      <div className="hero-overlay" />
+      <div className="hero-inner">
+        <div className="photo-hero-copy">
+          <p className="eyebrow">THE TRADE SPHERE JOURNAL</p>
+          <h1>
+            Great experiences.
+            <br />
+            <em>Even better stories.</em>
+          </h1>
+          <p>
+            Discover what’s happening, find your people,
+            <br />
+            and make a little room for the unexpected.
+          </p>
+          <div className="photo-hero-actions">
+            <Link className="button cyan" href="/events">
+              Explore experiences <ArrowUpRight size={17} />
+            </Link>
+            <Link className="hero-read-link" href="/journal">
+              Read the journal <ArrowUpRight size={17} />
+            </Link>
+          </div>
         </div>
-        <div className="masthead-title">
-          <span>TRADE</span>
-          <span>
-            SPHERE
-            <span className="masthead-star" aria-hidden="true">
-              ✳
-            </span>
-          </span>
-        </div>
-        <div className="masthead-bottom">
-          <span>Connect. Experience. Create memories.</span>
-          <span>GOOD PEOPLE. GREAT PLACES. STORIES WORTH LIVING.</span>
+        <div className="hero-bottom">
+          <Link className="hero-current" href={"/events/" + e.slug}>
+            <span>FEATURED EXPERIENCE · DEMO</span>
+            <strong>
+              {e.name} <ArrowUpRight size={18} />
+            </strong>
+            <small>
+              {dateLabel(e.date)} · {e.city}
+            </small>
+          </Link>
+          <div className="hero-playback">
+            <div className="hero-dots" aria-label="Choose featured image">
+              {events.map((event, i) => (
+                <button
+                  key={event.slug}
+                  className={i === index ? "selected" : ""}
+                  aria-label={"Show " + event.name}
+                  aria-pressed={i === index}
+                  onClick={() => setIndex(i)}
+                />
+              ))}
+            </div>
+            <button
+              className="pause-slideshow"
+              aria-label={
+                paused
+                  ? "Resume automatic slideshow"
+                  : "Pause automatic slideshow"
+              }
+              onClick={() => setPaused((p) => !p)}
+            >
+              {paused ? <Play size={15} /> : <Pause size={15} />}
+            </button>
+            <span>{String(index + 1).padStart(2, "0")} / 04</span>
+          </div>
         </div>
       </div>
-      <section
-        className="cover-story"
-        ref={root}
-        aria-label="Featured experience cover"
-      >
-        <div className="cover-sticky">
-          <div className="cover-canvas">
-            <div className="cover-media" key={event.slug}>
-              <img
-                src={event.image}
-                alt={event.tag + " — illustrative event photography"}
-              />
-            </div>
-            <div className="cover-scrim" />
-            <div className="cover-cutout">
-              <p className="eyebrow">THE ART OF SHOWING UP</p>
-              <h1>
-                Life happens
-                <br />
-                outside&nbsp;
-                <br />
-                <span>your feed.</span>
-              </h1>
-              <p>
-                A journal of experiences, connections
-                <br />
-                and reasons to get out there.
-              </p>
-              <Link href="/events" className="journal-button">
-                Find your next moment <ArrowUpRight size={19} />
-              </Link>
-              <span className="cutout-corner" aria-hidden="true" />
-            </div>
-            <div className="cover-rail">
-              <span className="eyebrow">ALSO IN THE SPHERE</span>
-              {events
-                .filter((e) => e.slug !== event.slug)
-                .slice(0, 2)
-                .map((e) => (
-                  <Link href={"/events/" + e.slug} key={e.slug}>
-                    <img src={e.image} alt="" />
-                    <div>
-                      <small>DEMO EXPERIENCE</small>
-                      <span>{e.name}</span>
-                    </div>
-                    <ArrowUpRight size={18} />
-                  </Link>
-                ))}
-            </div>
-            <div className="cover-feature" key={"text-" + event.slug}>
-              <p className="eyebrow">ON THE COVER / {event.tag} / DEMO</p>
-              <h2>{event.name}</h2>
-              <p className="cover-date">
-                {dateLabel(event.date)} <span>—</span> {event.city}
-              </p>
-              <Link href={"/events/" + event.slug}>
-                Read the event brief <ArrowUpRight size={19} />
-              </Link>
-            </div>
-            <div className="cover-controls">
-              <span aria-live="polite">
-                0{index + 1}
-                <small>/ 04</small>
-              </span>
-              <div>
-                <button
-                  aria-label="Previous featured experience"
-                  onClick={() =>
-                    setIndex((index + events.length - 1) % events.length)
-                  }
-                >
-                  <ArrowLeft size={20} />
-                </button>
-                <button
-                  aria-label="Next featured experience"
-                  onClick={() => setIndex((index + 1) % events.length)}
-                >
-                  <ArrowRight size={20} />
-                </button>
-              </div>
-            </div>
-            <div className="cover-seal" aria-hidden="true">
-              <span>LESS SCROLLING.</span>
-              <strong>
-                MORE
-                <br />
-                LIVING.
-              </strong>
-              <span>TRADE SPHERE EVENTS</span>
-            </div>
-          </div>
-          <div className="cover-scroll-note">
-            <span>SCROLL TO TURN THE PAGE</span>
-            <span>↓</span>
-            <span>
-              ALL EXPERIENCES IN THIS EDITION ARE DEMONSTRATION LISTINGS
-            </span>
-          </div>
-        </div>
-      </section>
-    </>
+      <span className="hero-paper-edge" aria-hidden="true" />
+    </section>
   );
 }

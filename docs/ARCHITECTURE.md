@@ -47,3 +47,7 @@ Original brand JPEG is client supplied. Supporting event photographs are illustr
 ## Revised creative direction (supersedes original hero concept)
 
 The public experience now follows an event-journal composition after the user's design correction. Official identity is preserved, with a warm paper canvas, dark print, restrained blue accents and a photographic cover. The unequal cutaway regions come from inspected frames in the supplied 23.58.10 video; the full-bleed-to-inset photo transition follows the observed 23.58.22 landscaping sequence. The lead story, numbered shortlist, scene index and editorial letter create newsletter rhythm. Demo content remains marked. No claims about original video backends, actual Trade Sphere events or an operating subscription system are made.
+
+## Current public direction — clean photo-led blog
+
+Supersedes both earlier oversized masthead/cutaway concepts. Compact official identity, full photographic automatic crossfade, restrained heading hierarchy, white/light reading sections, experience rows and four real editorial guide pages. Scroll navigation and repeatable bidirectional fades are explicit acceptance criteria. No invented event news, social proof or active ticket sales. The supplied reference influences page rhythm and image-led composition; Trade Sphere palette remains navy, royal blue and cyan.
