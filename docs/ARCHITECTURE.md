@@ -51,3 +51,7 @@ The public experience now follows an event-journal composition after the user's 
 ## Current public direction — clean photo-led blog
 
 Supersedes both earlier oversized masthead/cutaway concepts. Compact official identity, full photographic automatic crossfade, restrained heading hierarchy, white/light reading sections, experience rows and four real editorial guide pages. Scroll navigation and repeatable bidirectional fades are explicit acceptance criteria. No invented event news, social proof or active ticket sales. The supplied reference influences page rhythm and image-led composition; Trade Sphere palette remains navy, royal blue and cyan.
+
+## Glass refinement
+
+The user asked to preserve the body and wave edge while adding the liveliness of Home & Garden Pro and smoked-glass depth from Smartview. Both references were inspected live. Current homepage keeps the existing blog body and introduces a floating glass navigation, responsive glass discovery pass and bounded pointer/light movement. No reference business facts or imagery were imported. Demo events and the original Trade Sphere brand remain intact.

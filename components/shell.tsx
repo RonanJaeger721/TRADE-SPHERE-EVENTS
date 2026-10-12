@@ -1,8 +1,10 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 export function Shell({ children }: { children: React.ReactNode }) {
+  const isHome = usePathname() === "/";
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   useEffect(() => {
@@ -29,9 +31,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </span>
       </div>
       <header
-        className={
-          hidden && !open ? "site-header header-hidden" : "site-header"
-        }
+        className={`site-header${isHome ? " home-glass-header" : ""}${hidden && !open ? " header-hidden" : ""}`}
       >
         <Link href="/" aria-label="Trade Sphere Events home" className="brand">
           <img src="/brand-logo.jpeg" alt="Trade Sphere Events official logo" />

@@ -57,3 +57,11 @@ Added /journal and four informational guide routes. These are editorial content,
 Added reversible IntersectionObserver fade/translate reveals on sections and article paragraphs. Navigation hides while scrolling down and returns while scrolling up; open mobile navigation remains visible. Reduced motion retains all content and controls.
 
 Validation: production build and TypeScript pass. 39 final local production HTTP route/asset/404 checks pass, including all five journal routes. Autoplay observed advancing without manual selection. Responsive checks at 320, 360, 375, 390, 430, 768, 1024, 1366 and 1920px found no horizontal overflow or broken imagery. Browser verified scroll-down reveal states/header-hidden and scroll-up restored header. Local final production preview is http://localhost:3005. A development-server static-path worker JSON error was avoided by validating the actual production build; no production route errors reproduced.
+
+## Living stage and glass refinement — 12 October 2026
+
+Inspected the actual public Home & Garden Pro and Smartview references. Kept the body layout and white wavy section edge the user liked. Refined the homepage opening with a floating smoked-glass header, subtle moving stage-light beams, an automatically updating glass discovery pass, pointer-reactive perspective/reflection and gently moving glass chrome. Added modest frosted image captions without changing the body structure.
+
+The pass opens the selected demonstration event detail; it is not a ticket or payment confirmation. Autoplay now continues over the general hero background and pauses while interacting with the pass/controls or keyboard focus. Motion pauses offscreen; reduced-motion and non-blur fallbacks remain. Mobile pass is compact and has no pointer tilt.
+
+Build and TypeScript pass. Responsive checks at 320, 360, 375, 390, 430, 768, 1024, 1366 and 1920px found no horizontal overflow or broken images. Browser verified pointer coordinates updating the card transform/reflection variables. All 39 final local production route/asset/404 checks pass. Local preview: http://localhost:3006.
