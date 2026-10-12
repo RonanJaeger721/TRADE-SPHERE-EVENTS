@@ -29,3 +29,19 @@ Milestone 2: authentication, organiser roles, event creation, ticket-category ma
 - Countdown checked before and after reload: same fixed event timestamp; timer does not reset.
 - No browser warning/error logs observed on the local event detail route.
 - Reduced-motion fallback reviewed in CSS. PostgreSQL draft and provider integrations are not tested or provisioned.
+
+## Editorial redesign — 12 October 2026
+
+User rejected the original public styling and requested a newsletter-like experience based on two supplied videos. Reviewed actual frames from WhatsApp Video 23.58.10 (interlocking hero regions) and 23.58.22 (immersive imagery contracting into an editorial frame).
+
+Replaced the landing-page composition with an experience journal: paper masthead, cutaway photographic cover, agenda lead story and numbered shortlist, interactive scene selection, editorial letter and updates/hosting noticeboard. Updated shared navigation, footer and public route styling. Original logo and demonstration labels retained.
+
+Motion: a brief sticky cover contracts from full bleed into an inset frame as scroll progress increases; reverse scroll restores the full scene. Featured selection changes cover photography and event link with coordinated transitions. Mood selection reveals the chosen image and its real event-detail destination. Supporting photos use bounded scroll movement where supported. Mobile uses document-flow text and a single image, with no pinned scene. Reduced motion disables the choreography and retains all controls.
+
+Validated desktop cover progress from 0 to 1 and back to 0; featured next/previous; mood choices; mobile navigation. Responsive checks at 320, 360, 375, 390, 430, 768, 1024, 1366 and 1920px detected no overflow, broken images or mobile text/image overlap. Final production build and release verification follow below.
+
+Milestone 1 scope remains: no account/payment/QR implementation. Updates CTA is a clearly labelled WhatsApp enquiry, not a fake email subscription.
+
+### Editorial redesign final local gate
+
+Production build (including official-artwork icon route), TypeScript and Git whitespace checks pass. The same 34 route/asset/404 checks pass against the final local production server on port 3003. Smooth route-transition declaration added. No database or payment capability added in this revision.

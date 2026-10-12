@@ -43,3 +43,7 @@ Methods: ST-02 living subject, ST-05 asymmetric composition, ST-04 useful discov
 ## Supporting media
 
 Original brand JPEG is client supplied. Supporting event photographs are illustrative Unsplash images, not evidence of Trade Sphere events: photo-1470229722913-7c0e2dbbafd3, photo-1511795409834-ef04bbd61622, photo-1540575467063-178a50c2df87, photo-1492684223066-81342ee5ff30. Obtain authentic event posters before replacing demo content. Images stored locally so the public preview does not depend on a remote image host at runtime.
+
+## Revised creative direction (supersedes original hero concept)
+
+The public experience now follows an event-journal composition after the user's design correction. Official identity is preserved, with a warm paper canvas, dark print, restrained blue accents and a photographic cover. The unequal cutaway regions come from inspected frames in the supplied 23.58.10 video; the full-bleed-to-inset photo transition follows the observed 23.58.22 landscaping sequence. The lead story, numbered shortlist, scene index and editorial letter create newsletter rhythm. Demo content remains marked. No claims about original video backends, actual Trade Sphere events or an operating subscription system are made.
